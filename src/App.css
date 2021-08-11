@@ -1,7 +1,7 @@
 body {
   background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   min-height: 100vh;
 }
 
@@ -14,14 +14,18 @@ p {
   justify-content: center;
 }
 
-header, form {
-  min-height: 20vh;
+header,
+form,
+h2,
+h1 {
+  /* min-height: 20vh; */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-form input, form button {
+form input,
+form button {
   padding: 0.5rem;
   font-size: 2rem;
   border: none;
@@ -67,7 +71,7 @@ select {
 
 select {
   color: #ff6f47;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
   width: 12rem;
 }
@@ -75,7 +79,7 @@ select {
 /* Arrow */
 
 .select::after {
-  content: "\25BC";
+  content: '\25BC';
   position: absolute;
   top: 0;
   right: 0;
