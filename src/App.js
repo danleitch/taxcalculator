@@ -3,121 +3,95 @@ import './App.css';
 import Tax from './components/tax_logic.jsx';
 
 function App() {
-  const [count, setCount] = useState(null);
   const [taxBracket, setTaxBracket] = useState(null);
-  const [buttonState, setButtonState] = useState(true);
   const [totalEarnings, setTotalEarnings] = useState(null);
 
   const inputHandler = (e) => {
     const rawInputData = e.target.value;
-    taxCalcs(rawInputData);
+    taxCalcs(rawInputData * 12);
     setTotalEarnings(rawInputData.toLocaleString('en-US'));
   };
 
-  // let amount = '';
+  // let annualEarnings = '';
 
-  const taxCalcs = (amount) => {
+  const taxCalcs = (annualEarnings) => {
     let totalTaxPayment = '';
     // Tax Rates Based on 2022 rates.
 
     // 18%
-    if (amount > 1 && amount < 216200) {
-      totalTaxPayment = amount * 0.18;
+    if (annualEarnings > 1 && annualEarnings < 216200) {
+      totalTaxPayment = annualEarnings * 0.18;
       setTaxBracket(0.18);
     }
     // 26%
-    if (amount > 216201 && amount < 337800) {
-      totalTaxPayment = (amount - 216200) * 0.26 + 38916;
+    if (annualEarnings > 216201 && annualEarnings < 337800) {
+      totalTaxPayment = (annualEarnings - 216200) * 0.26 + 38916;
       setTaxBracket(0.26);
     }
     // 31%
-    if (amount > 337801 && amount < 467500) {
-      totalTaxPayment = (amount - 337800) * 0.31 + 70532;
+    if (annualEarnings > 337801 && annualEarnings < 467500) {
+      totalTaxPayment = (annualEarnings - 337800) * 0.31 + 70532;
       setTaxBracket(0.31);
     }
     // 36%
-    if (amount > 467501 && amount < 613600) {
-      totalTaxPayment = amount - 467500 * 0.36 + 110739;
+    if (annualEarnings > 467501 && annualEarnings < 613600) {
+      totalTaxPayment = annualEarnings - 467500 * 0.36 + 110739;
       setTaxBracket(0.36);
     }
     // 39%
-    if (amount > 613601 && amount < 782200) {
-      totalTaxPayment = amount - 613600 * 0.39 + 163335;
+    if (annualEarnings > 613601 && annualEarnings < 782200) {
+      totalTaxPayment = annualEarnings - 613600 * 0.39 + 163335;
       setTaxBracket(0.39);
     }
     // 41%
-    if (amount > 782201 && amount < 1656600) {
-      totalTaxPayment = amount - 782200 * 0.41 + 229089;
+    if (annualEarnings > 782201 && annualEarnings < 1656600) {
+      totalTaxPayment = annualEarnings - 782200 * 0.41 + 229089;
       setTaxBracket(0.41);
     }
     // 45%
-    if (amount > 1656601) {
-      totalTaxPayment = amount * 0.45 + 587593;
+    if (annualEarnings > 1656601) {
+      totalTaxPayment = annualEarnings * 0.45 + 587593;
       setTaxBracket(0.45);
     }
-
-    if (buttonState) {
-      setCount(totalTaxPayment / 12);
-    }
-    if (!buttonState) {
-      setCount(totalTaxPayment);
-    }
   };
 
-  // let buttonState = true;
-
-  const buttonHandler = (e) => {
-    // buttonState = !buttonState;
-    setButtonState(!buttonState);
-    console.log(buttonState);
-    // setCount(count / 12);
-    // console.log(count);
-    e.preventDefault();
-
-    if (buttonState) {
-      setCount(count * 12);
-    } else setCount(count / 12);
-  };
+  const yearlyEarning = totalEarnings * 12;
 
   return (
     <div>
       <header>
-        <h1>Income Tax Calculator</h1>
+        <h1>Income Tax Calculator </h1>
       </header>
       <Tax />
 
-      {!count && <h1>Enter Income and Submit </h1>}
+      {!totalEarnings && <h1>Enter Income</h1>}
       {taxBracket && (
         <div>
           <h2>
-            Your tax Bracket is {taxBracket * 100}%, tax needing to be paid per
-            a year is R{count * 12}
+            Your tax bracket is {taxBracket * 100}%, tax needing to be paid per
+            a year is R{yearlyEarning * taxBracket}
           </h2>
           <h2>
-            Your gross monthly salary is R
-            {(totalEarnings / 12).toLocaleString('en-US')} your take home
-            monthly salary is R
-            {(totalEarnings / 12 - count).toLocaleString('en-US')}
+            Your take home monthly salary R
+            {(totalEarnings - totalEarnings * taxBracket).toLocaleString(
+              'en-US'
+            )}
+          </h2>
+          <h2>
+            You pay R{(totalEarnings * taxBracket).toLocaleString('en-US')} in
+            tax per month
           </h2>
         </div>
       )}
 
-      {count && (
-        <h2>
-          Annual Earning is <br /> R{totalEarnings}
-        </h2>
-      )}
+      {totalEarnings && <h2>Annual Earning is R{yearlyEarning}</h2>}
       <form>
         <input
           onChange={inputHandler}
           type="number"
           className="todo-input"
-          placeholder="Amount"
+          placeholder="Monthly Salary"
         />
-
-        <button className="todo-button" type="submit" onClick={buttonHandler}>
-          {buttonState ? <i>Switch to Annual</i> : <i>Switch to Monthly</i>}
-        </button>
       </form>
     </div>
   );
