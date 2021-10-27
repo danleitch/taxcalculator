@@ -6,6 +6,7 @@ WORKDIR /app
 COPY . .
 # install node modules and build assets
 RUN npm install && npm build
+hello
 # nginx state for serving content
 FROM nginx:alpine
 # Set working directory to nginx asset directory
@@ -19,9 +20,10 @@ ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
 
 
-# docker build -t blades/taxcalculator:latest  .
+# docker build -t blades/taxcalculator:latest .
 
 # Great resources
+# https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/
 # https://typeofnan.dev/how-to-serve-a-react-app-with-nginx-in-docker/
 # https://jhooq.com/requested-access-to-resource-is-denied/
 
